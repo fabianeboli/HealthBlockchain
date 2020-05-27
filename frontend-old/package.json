@@ -1,0 +1,68 @@
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "@types/jest": "^24.9.1",
+    "@types/react": "^16.9.35",
+    "@types/react-dom": "^16.9.8",
+    "@types/styled-components": "^5.1.0",
+    "fabric-network": "~1.4.0",
+    "fabric-shim": "^2.1.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "3.4.1",
+    "styled-components": "^5.1.1",
+    "typescript": "^3.7.5"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.2.0",
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^10.12.10",
+    "@types/sinon": "^7.0.13",
+    "@types/sinon-chai": "^3.2.3",
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "jsrsasign": "^8.0.13",
+    "minimist": "^1.2.5",
+    "mocha": "^6.2.0",
+    "nyc": "^14.1.1",
+    "sinon": "^7.4.1",
+    "sinon-chai": "^3.3.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "lint": "tslint -c tslint.json 'src/**/*.ts'",
+    "pretest": "npm run lint",
+    "testAPI": "nyc mocha -r ts-node/register src/**/*.spec.ts",
+    "resolve": "npx npm-force-resolutions",
+    "buildAPI": "tsc",
+    "build:watch": "tsc -w",
+    "prepublishOnly": "npm run build",
+    "startAPI": "node ./API/dist/create.js",
+    "create": "node ../API/dist/create.js",
+    "query": "node ./API/dist/query.js",
+    "listener": "node ./API/dist/listener.js"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

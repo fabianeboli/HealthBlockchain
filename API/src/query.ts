@@ -1,6 +1,6 @@
 import { FileSystemWallet, Gateway } from "fabric-network";
 import * as path from "path";
-const main = async () => {
+export const query = async (index: string): Promise<string> => {
   try {
     // Create a new file system based wallet for managing identities.
     const walletPath = path.join(process.cwd(), "Org1Wallet");
@@ -23,17 +23,24 @@ const main = async () => {
     // Get the contract from the network.
     const contract = network.getContract("Health");
 
-    const result = await contract.evaluateTransaction('readMedicalRecord', '001');
-    console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
-    
+    const result = await contract.evaluateTransaction(
+      "readMedicalRecord",
+      index
+    );
 
-    // Disconnect from the gateway.
+    console.log(
+      `Transaction has been evaluated, result is: ${result.toString()}`
+    );
+
+    // Disconnect from the gateway and return the result
     await gateway.disconnect();
+    return result.toString();
   } catch (error) {
     console.error(`Failed to submit transaction: ${error}`);
-    process.exit(1);
+    // return `Pacjent o indeksie ${index} nie został znaleziony`;
+    // process.exit(1);
   }
-}
+};
 // main();
 // async function main() {
 //   try {
@@ -60,7 +67,6 @@ const main = async () => {
 
 //     const result = await contract.evaluateTransaction('readMedicalRecord', '001');
 //     console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
-    
 
 //     // Disconnect from the gateway.
 //     await gateway.disconnect();
