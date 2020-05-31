@@ -6,7 +6,7 @@ export enum Gender {
 export type Examination = {
   examinationName: string;
   place: string;
-  date: Date | number;
+  date: Date | number | string;
   result: string;
   prescription: string;
   price: string;

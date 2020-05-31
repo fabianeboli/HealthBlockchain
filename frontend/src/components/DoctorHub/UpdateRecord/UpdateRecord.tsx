@@ -1,17 +1,11 @@
 import React, { useState, FC } from "react";
-import { RecordData, Examination, Gender } from "../../../types";
-import { stringify } from "querystring";
+import { RecordData, Examination } from "../../../types";
+import moment from "moment";
+import "moment/locale/pl";
 
 const UpdateRecord: FC = () => {
   const [index, setIndex] = useState<string>("");
   const [loader, setLoader] = useState<boolean>(false);
-  // const [firstName, setFirstName] = useState<RecordData["firstName"]>("");
-  // const [lastName, setLastName] = useState<RecordData["lastName"]>("");
-  // const [pesel, setPesel] = useState<RecordData["pesel"]>("");
-  // const [gender, setGender] = useState<RecordData["gender"]>(Gender.male);
-  // const [dateOfBirth, setDateOfBirth] = useState<RecordData["dateOfBirth"]>(
-  //   "01-01-1991"
-  // );
   const [medicalHistory, setMedicalHistory] = useState<Examination[]>([]);
 
   const [examinationName, setExaminationName] = useState<string>("");
@@ -73,7 +67,7 @@ const UpdateRecord: FC = () => {
     if (response.ok) {
       console.log("New examination has been added");
     } else {
-      console.log(`ERROR: ${response.status}`);
+      console.error(`ERROR: ${response.status}`);
     }
   };
 
@@ -81,35 +75,34 @@ const UpdateRecord: FC = () => {
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ): Promise<void> => {
     event.preventDefault();
-
     setLoader(true);
     const response: Response = await fetch(`http://localhost:3001/${index}`);
     if (response.ok) {
       console.log("OK");
       const fetchedData = await response.json();
-      const data = JSON.parse(fetchedData.value);
+      const {
+        firstName,
+        lastName,
+        pesel,
+        gender,
+        dateOfBirth,
+        medicalHistory,
+      } = JSON.parse(fetchedData.value);
+      setMedicalHistory(medicalHistory);
       console.log(fetchedData);
-      if ((data as RecordData).firstName) {
-        // setFirstName(data.firstName);
-        // setLastName(data.lastName);
-        // setPesel(data.pesel);
-        // setDateOfBirth(data.dateOfBirth);
-        // setGender(data.gender);
-        // setMedicalHistory(data.medicalHistory);
-        addExamination(
-          data.firstName,
-          data.lastName,
-          data.pesel,
-          data.gender,
-          data.dateOfBirth,
-          examinationName,
-          place,
-          date,
-          result,
-          prescription,
-          price
-        );
-      }
+      addExamination(
+        firstName,
+        lastName,
+        pesel,
+        gender,
+        dateOfBirth,
+        examinationName,
+        place,
+        moment().format("LLLL"),
+        result,
+        prescription,
+        price
+      );
     } else {
       console.log(`ERROR: ${response.status}`);
     }
@@ -157,7 +150,7 @@ const UpdateRecord: FC = () => {
           required
         />
         <input
-          type="date"
+          type="text"
           name="prescription"
           placeholder="Leki"
           value={prescription}

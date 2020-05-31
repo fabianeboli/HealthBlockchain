@@ -1,11 +1,8 @@
 import React, { useState, FC } from "react";
-import { RecordData, Gender } from "../../../types";
-
 type MouseEvent = React.MouseEvent<HTMLButtonElement, globalThis.MouseEvent>;
 
 const DeleteRecord: FC = (): JSX.Element => {
   const [index, setIndex] = useState<string>("");
- 
 
   const handleForm = async (event: MouseEvent): Promise<void> => {
     event.preventDefault();
@@ -15,7 +12,6 @@ const DeleteRecord: FC = (): JSX.Element => {
       headers: { "Content-Type": "application/json;charset=utf-8" },
       
     };
-    console.log("HEREEE", index);
     const response = await fetch(`http://localhost:3001/${index}`, config);
     if (response.ok) {
       console.log(`Record was deleted ${response.body}`);
