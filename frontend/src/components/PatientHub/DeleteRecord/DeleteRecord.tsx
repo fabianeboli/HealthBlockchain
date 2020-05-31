@@ -5,6 +5,9 @@ type MouseEvent = React.MouseEvent<HTMLButtonElement, globalThis.MouseEvent>;
 
 const DeleteRecord: FC = (): JSX.Element => {
 	const { index, changeIndex } = useContext(PatientIndexContext);
+
+	const [error, setError] = useState("");
+
 	const handleForm = async (event: MouseEvent): Promise<void> => {
 		event.preventDefault();
 
@@ -17,7 +20,8 @@ const DeleteRecord: FC = (): JSX.Element => {
 		if (response.ok) {
 			console.log(`Record was deleted ${response.body}`);
 		} else {
-			console.log(`ERROR: ${response.status}`);
+			setError(`ERROR: ${response.statusText}`);
+			console.error(`ERROR: ${response.status}`);
 		}
 		changeIndex("");
 	};
@@ -40,7 +44,12 @@ const DeleteRecord: FC = (): JSX.Element => {
 		</>
 	);
 
-	return <div>{form}</div>;
+	return (
+		<div>
+			{form}
+			{error && <h1>Błąd: {error}</h1>}
+		</div>
+	);
 };
 
 export default DeleteRecord;

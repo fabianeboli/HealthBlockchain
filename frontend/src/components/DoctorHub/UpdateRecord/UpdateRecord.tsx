@@ -13,6 +13,8 @@ const UpdateRecord: FC = () => {
 	const [prescription, setPrescription] = useState<string>("");
 	const [price, setPrice] = useState<string>("");
 
+	const [error, setError] = useState<string>("");
+
 	const addExamination = async (
 		firstName: RecordData["firstName"],
 		lastName: RecordData["lastName"],
@@ -59,6 +61,7 @@ const UpdateRecord: FC = () => {
 		if (response.ok) {
 			console.log("New examination has been added");
 		} else {
+			setError(`ERROR: ${response.statusText}`);
 			console.error(`ERROR: ${response.status}`);
 		}
 	};
@@ -159,7 +162,12 @@ const UpdateRecord: FC = () => {
 		</>
 	);
 
-	return <div>{form}</div>;
+	return (
+		<div>
+			{form}
+			{error && <h1>Błąd: {error}</h1>}
+		</div>
+	);
 };
 
 export default UpdateRecord;

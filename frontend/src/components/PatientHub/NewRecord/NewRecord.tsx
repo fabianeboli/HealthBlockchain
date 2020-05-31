@@ -14,6 +14,8 @@ const NewRecord: FC = (): JSX.Element => {
 	const [gender, setGender] = useState<RecordData["gender"]>(Gender.male);
 	const [dateOfBirth, setDateOfBirth] = useState<RecordData["dateOfBirth"]>("01-01-1991");
 
+	const [error, setError] = useState<string>("");
+
 	const handleForm = async (event: MouseEvent): Promise<void> => {
 		event.preventDefault();
 		const index = Math.floor(Math.random() * 1000000 + 1);
@@ -31,13 +33,18 @@ const NewRecord: FC = (): JSX.Element => {
 			body: JSON.stringify({ index, record }),
 		};
 
+		
+
 		const response = await fetch("http://localhost:3001/", config);
 
-		if (response.status === 201) {
+	
+
+		if (response.ok ) {
 			console.log(`Record was created ${response.body}`);
 			await changeIndex(String(index));
 			console.log(`Twój indeks to ${index}`);
 		} else {
+			setError(`ERROR: ${response.statusText}`);
 			console.log(`ERROR: ${response.status}`);
 		}
 	};
@@ -86,7 +93,9 @@ const NewRecord: FC = (): JSX.Element => {
 					name="gender"
 					value={Gender.female}
 					onChange={() => setGender(Gender.female)}
+					required
 				/>
+				<label htmlFor="dateOfBirth"> Data urodzenia</label>
 				<input
 					type="date"
 					name="dateOfBirth"
@@ -107,6 +116,7 @@ const NewRecord: FC = (): JSX.Element => {
 			<h1>Dodaj nowy rekord</h1>
 			{index && <Redirect to="/patient" />}
 			{!index && form}
+			{error && <h1>Błąd: {error}</h1>}
 		</div>
 	);
 };
