@@ -7,10 +7,8 @@ const UpdateRecord: FC = () => {
   const [index, setIndex] = useState<string>("");
   const [loader, setLoader] = useState<boolean>(false);
   const [medicalHistory, setMedicalHistory] = useState<Examination[]>([]);
-
   const [examinationName, setExaminationName] = useState<string>("");
   const [place, setPlace] = useState<string>("");
-  const [date] = useState<Date>(new Date());
   const [result, setResult] = useState<string>("");
   const [prescription, setPrescription] = useState<string>("");
   const [price, setPrice] = useState<string>("");

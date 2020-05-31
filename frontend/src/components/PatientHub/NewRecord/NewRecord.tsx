@@ -1,9 +1,12 @@
-import React, { useState, FC } from "react";
+import React, { useState, FC, useContext } from "react";
 import { RecordData, Gender } from "../../../types";
+import { PatientIndexContext } from "../../../contexts/PatientIndexContext";
 
 type MouseEvent = React.MouseEvent<HTMLButtonElement, globalThis.MouseEvent>;
 
 const NewRecord: FC = (): JSX.Element => {
+  const {index , changeIndex } = useContext(PatientIndexContext);
+
   const [firstName, setFirstName] = useState<RecordData["firstName"]>("");
   const [lastName, setLastName] = useState<RecordData["lastName"]>("");
   const [pesel, setPesel] = useState<RecordData["pesel"]>("");
@@ -12,7 +15,7 @@ const NewRecord: FC = (): JSX.Element => {
     "01-01-1991"
   );
 
-  const [index, setIndex] = useState<number>(0);
+ // const [index, setIndex] = useState<number>(0);
 
   const handleForm = async (event: MouseEvent): Promise<void> => {
     event.preventDefault();
@@ -35,7 +38,7 @@ const NewRecord: FC = (): JSX.Element => {
 
     if (response.status === 201) {
       console.log(`Record was created ${response.body}`);
-      setIndex(index);
+      await changeIndex(String(index));
       console.log(`Twój indeks to ${index}`);
     } else {
       console.log(`ERROR: ${response.status}`);
