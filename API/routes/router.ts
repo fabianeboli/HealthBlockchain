@@ -22,33 +22,25 @@ router.delete("/:index", async (req, res) => {
 });
 
 router.put("/:index", (req, res) => {
+  console.warn("UPDATING A RECORD")
   const { index } = req.params;
-  const updatedPatientData = req.body;
+  const  updatedPatientData = req.body;
+  console.log("DATA ", updatedPatientData);
+  console.log("------------- UPDATED: ---------------------------------- \n ", updatedPatientData);
   update(index, updatedPatientData);
+  res.status(200).end();
 });
 
 router.post("/", (req, res): void => {
-  const index = Math.floor(Math.random() * 10000);
-
+  console.log("CREATING A NEW RECORD")
   const {
-    firstName,
-    lastName,
-    pesel,
-    gender,
-    dateOfBirth,
-    medicalHistory,
+    index,
+    record
   } = req.body;
-  const recordData: RecordData = {
-    firstName,
-    lastName,
-    pesel,
-    gender,
-    dateOfBirth,
-    medicalHistory,
-  };
-  create(String(index), recordData);
-  res.status(201);
+  console.log(`NEW RECORD: INDEKS: ${index}\n VALUE: ${record}`)
+  create(String(index), record);
   console.log("CREATED A RECORD");
+  res.status(201).end();
 });
 
 router.get(
@@ -57,7 +49,7 @@ router.get(
     const { index } = req.params;
     const text = await query(index);
     if (text) {
-      console.log("TEXT: ", text);
+      //console.log("TEXT: ", text);
       res.send(text);
     } else {
       res.status(400);

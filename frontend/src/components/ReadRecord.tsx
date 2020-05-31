@@ -10,17 +10,16 @@ const ReadRecord: FC = () => {
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ): Promise<void> => {
     event.preventDefault();
-  
+
     setLoader(true);
     const response: Response = await fetch(`http://localhost:3001/${index}`);
     if (response.ok) {
-      console.log("OK");
       const fetchedData = await response.json();
       const data = JSON.parse(fetchedData.value);
-      console.log(fetchedData);
-      if ((data as RecordData).firstName) {
+
+    
         setPatientData(data);
-      }
+      
     } else {
       console.log(`ERROR: ${response.status}`);
     }
@@ -36,8 +35,15 @@ const ReadRecord: FC = () => {
         <li>PESEL: {record.pesel}</li>
         <li>
           Historia medyczna:{" "}
-          {record.medicalHistory?.map((el) => (
-            <li> {el} </li>
+          {record.medicalHistory.map((examination) => (
+            <ul>
+              <li>Nazwa Badania: {examination.examinationName} </li>
+              <li>Miejsce Badania {examination.place} </li>
+              <li>Data: {examination.date} </li>
+              <li>Wynik Badania: {examination.result} </li>
+              <li>Recepta: {examination.prescription} </li>
+              <li>Cena: {examination.price} </li>
+            </ul>
           ))}
         </li>
       </ul>

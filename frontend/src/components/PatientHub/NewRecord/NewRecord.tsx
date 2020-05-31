@@ -12,8 +12,11 @@ const NewRecord: FC = (): JSX.Element => {
     "01-01-1991"
   );
 
+  const [index, setIndex] = useState<number>(0);
+
   const handleForm = async (event: MouseEvent): Promise<void> => {
     event.preventDefault();
+    const index = Math.floor(Math.random() * 1000000 + 1);
     const record: RecordData = {
       firstName,
       lastName,
@@ -25,12 +28,15 @@ const NewRecord: FC = (): JSX.Element => {
     const config = {
       method: "POST",
       headers: { "Content-Type": "application/json;charset=utf-8" },
-      body: JSON.stringify(record),
+      body: JSON.stringify({ index, record }),
     };
 
     const response = await fetch("http://localhost:3001/", config);
-    if (response.ok) {
+
+    if (response.status === 201) {
       console.log(`Record was created ${response.body}`);
+      setIndex(index);
+      console.log(`Twój indeks to ${index}`);
     } else {
       console.log(`ERROR: ${response.status}`);
     }
@@ -66,16 +72,15 @@ const NewRecord: FC = (): JSX.Element => {
           required
         />
 
-		
-		<label htmlFor='gender'>Mężczyzna</label>
+        <label htmlFor="gender">Mężczyzna</label>
         <input
           type="radio"
           name="gender"
           value={Gender.male}
-		  onChange={() => setGender(Gender.male)}
-		  required
+          onChange={() => setGender(Gender.male)}
+          required
         />
-		<label htmlFor='gender'>Kobieta</label>
+        <label htmlFor="gender">Kobieta</label>
         <input
           type="radio"
           name="gender"
@@ -97,7 +102,11 @@ const NewRecord: FC = (): JSX.Element => {
     </>
   );
 
-  return <div>{form}</div>;
+  return (
+    <div>
+      {index ? <h1>Stworzyłeś swój rekord o indeksie {index}</h1> : form}
+    </div>
+  );
 };
 
 export default NewRecord;

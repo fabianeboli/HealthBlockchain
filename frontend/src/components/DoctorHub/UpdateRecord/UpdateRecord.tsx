@@ -1,16 +1,17 @@
 import React, { useState, FC } from "react";
 import { RecordData, Examination, Gender } from "../../../types";
+import { stringify } from "querystring";
 
 const UpdateRecord: FC = () => {
   const [index, setIndex] = useState<string>("");
   const [loader, setLoader] = useState<boolean>(false);
-  const [firstName, setFirstName] = useState<RecordData["firstName"]>("");
-  const [lastName, setLastName] = useState<RecordData["lastName"]>("");
-  const [pesel, setPesel] = useState<RecordData["pesel"]>("");
-  const [gender, setGender] = useState<RecordData["gender"]>(Gender.male);
-  const [dateOfBirth, setDateOfBirth] = useState<RecordData["dateOfBirth"]>(
-    "01-01-1991"
-  );
+  // const [firstName, setFirstName] = useState<RecordData["firstName"]>("");
+  // const [lastName, setLastName] = useState<RecordData["lastName"]>("");
+  // const [pesel, setPesel] = useState<RecordData["pesel"]>("");
+  // const [gender, setGender] = useState<RecordData["gender"]>(Gender.male);
+  // const [dateOfBirth, setDateOfBirth] = useState<RecordData["dateOfBirth"]>(
+  //   "01-01-1991"
+  // );
   const [medicalHistory, setMedicalHistory] = useState<Examination[]>([]);
 
   const [examinationName, setExaminationName] = useState<string>("");
@@ -21,12 +22,17 @@ const UpdateRecord: FC = () => {
   const [price, setPrice] = useState<string>("");
 
   const addExamination = async (
-    examinationName: string,
-    place: string,
-    date: number | Date,
-    result: string,
-    prescription: string,
-    price: string
+    firstName: RecordData["firstName"],
+    lastName: RecordData["lastName"],
+    pesel: RecordData["pesel"],
+    dateOfBirth: RecordData["dateOfBirth"],
+    gender: RecordData["gender"],
+    examinationName: Examination["examinationName"],
+    place: Examination["place"],
+    date: Examination["date"],
+    result: Examination["result"],
+    prescription: Examination["prescription"],
+    price: Examination["price"]
   ) => {
     const newExamination: Examination = {
       examinationName,
@@ -42,7 +48,7 @@ const UpdateRecord: FC = () => {
       newExamination,
     ];
 
-    setMedicalHistory((patient) => updatedMedicalHistory);
+    setMedicalHistory(updatedMedicalHistory);
 
     const updatedPatientData: RecordData = {
       firstName,
@@ -63,11 +69,11 @@ const UpdateRecord: FC = () => {
       `http://localhost:3001/${index}`,
       config
     );
-
+    console.log("I AM HERE");
     if (response.ok) {
       console.log("New examination has been added");
     } else {
-      console.log(`ERROR: ${response.status}`)
+      console.log(`ERROR: ${response.status}`);
     }
   };
 
@@ -84,13 +90,18 @@ const UpdateRecord: FC = () => {
       const data = JSON.parse(fetchedData.value);
       console.log(fetchedData);
       if ((data as RecordData).firstName) {
-        setFirstName(data.firstName);
-        setLastName(data.lastName);
-        setPesel(data.pesel);
-        setDateOfBirth(data.dateOfBirth);
-        setGender(data.gender);
-        setMedicalHistory(data.medicalHistory);
+        // setFirstName(data.firstName);
+        // setLastName(data.lastName);
+        // setPesel(data.pesel);
+        // setDateOfBirth(data.dateOfBirth);
+        // setGender(data.gender);
+        // setMedicalHistory(data.medicalHistory);
         addExamination(
+          data.firstName,
+          data.lastName,
+          data.pesel,
+          data.gender,
+          data.dateOfBirth,
           examinationName,
           place,
           date,
