@@ -34,9 +34,9 @@ export const check = async (index: string) => {
 
     // Disconnect from the gateway and return the result
     await gateway.disconnect();
-    return result;
+    return true;
   } catch (error) {
     console.error(`Failed to submit transaction: ${error}`);
-    // process.exit(1);
+    return false;
   }
 };

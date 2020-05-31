@@ -41,7 +41,6 @@ ${event.chaincode_id}, tx_id: ${event.tx_id}, event_name:
     }
   } catch (error) {
     console.error(`Error: ${error}`);
-    process.exit(1);
   }
   function sleep(ms: number) {
     return new Promise((resolve) => setTimeout(resolve, ms));

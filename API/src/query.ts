@@ -35,10 +35,11 @@ export const query = async (index: string): Promise<string> => {
     // Disconnect from the gateway and return the result
     await gateway.disconnect();
     return result.toString();
+   
   } catch (error) {
     console.error(`Failed to submit transaction: ${error}`);
+    return ""
     // return `Pacjent o indeksie ${index} nie został znaleziony`;
-    process.exit(1);
   }
 };
 

@@ -5,7 +5,7 @@ import * as path from "path";
 export const create = async (
   index: string,
   recordData: RecordData
-): Promise<void> => {
+): Promise<boolean> => {
   try {
     // Create a new file system based wallet for managing identities.
     const walletPath = path.join(process.cwd(), "Org1Wallet");
@@ -39,9 +39,10 @@ export const create = async (
 
     // Disconnect from the gateway.
     await gateway.disconnect();
+    return true;
   } catch (error) {
     console.error(`Failed to submit transaction: ${error}`);
-    process.exit(1);
+    return false;
   }
 };
 
