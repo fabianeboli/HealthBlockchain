@@ -1,22 +1,26 @@
 import React, { useState, FC, useContext } from "react";
-import { RecordData, Examination } from "../types";
-import { PatientIndexContext } from "../contexts/PatientIndexContext";
+import { RecordData, Examination } from "../../types";
+import { PatientIndexContext } from "../../contexts/PatientIndexContext";
 
 const ReadRecord: FC = () => {
 	const [patientData, setPatientData] = useState<RecordData>();
 	const { index } = useContext(PatientIndexContext);
 	const [localIndex, setLocalIndex] = useState<string>(index);
+
 	const [loader, setLoader] = useState<boolean>(false);
+	const [error, setError] = useState<string>("");
 
 	const fetchPatientData = async (index: string) => {
 		setLoader(true);
 		const response: Response = await fetch(`http://localhost:3001/${index}`);
+
 		if (response.ok) {
 			console.log("DATA IS FETCHED");
 			const fetchedData = await response.json();
 			const data = JSON.parse(fetchedData.value);
 			setPatientData(data);
 		} else {
+			setError(`Błąd: ${response.status}`);
 			console.error(`ERROR: ${response.status}`);
 		}
 		setLoader(false);
@@ -84,6 +88,7 @@ const ReadRecord: FC = () => {
 					</>
 				)
 			)}
+			{error && <h1>{error}</h1>}
 		</div>
 	);
 };

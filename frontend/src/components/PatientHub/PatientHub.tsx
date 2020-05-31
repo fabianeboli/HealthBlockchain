@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import NewRecord from "./NewRecord/NewRecord";
 import DeleteRecord from "./DeleteRecord/DeleteRecord";
-import ReadRecord from "../ReadRecord";
+import ReadRecord from "../ReadRecord/ReadRecord";
 import { PatientIndexContext } from "../../contexts/PatientIndexContext";
 import { Route, Link } from "react-router-dom";
 

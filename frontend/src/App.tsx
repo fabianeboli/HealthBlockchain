@@ -4,17 +4,16 @@ import "./App.css";
 import DoctorHub from "./components/DoctorHub/DoctorHub";
 import PatientHub from "./components/PatientHub/PatientHub";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { PatientIndexProvider, PatientIndexContext } from "./contexts/PatientIndexContext";
+import { PatientIndexProvider } from "./contexts/PatientIndexContext";
 import NewRecord from "./components/PatientHub/NewRecord/NewRecord";
-import ReadRecord from "./components/ReadRecord";
+import ReadRecord from "./components/ReadRecord/ReadRecord";
 import UpdateRecord from "./components/DoctorHub/UpdateRecord/UpdateRecord";
 import DeleteRecord from "./components/PatientHub/DeleteRecord/DeleteRecord";
+import Main from "./components/Main/Main";
 
 function App() {
-  const { changeIndex } = useContext(PatientIndexContext);
 	return (
-    <div className="App">
-    {changeIndex("")}
+		<div className="App">
 			<Router>
 				<div>
 					<nav>
@@ -32,7 +31,6 @@ function App() {
 					</nav>
 
 					<Switch>
-           
 						<PatientIndexProvider>
 							<Route path="/patient">
 								<PatientHub />
@@ -56,7 +54,10 @@ function App() {
 							<Route path="/doctor/readrecord">
 								<ReadRecord />{" "}
 							</Route>
-							<Route path="/">{}</Route>
+							<Route path="/" exact>
+								{" "}
+								<Main />{" "}
+							</Route>
 						</PatientIndexProvider>
 					</Switch>
 				</div>
