@@ -6,14 +6,18 @@ import {
 	TableContainer,
 	Paper,
 	TableHead,
-	TableRow as StyledTableRow,
-	TableCell,
 	TableBody,
+	TableCell,
 	TextField,
 	Button,
 } from "@material-ui/core";
 import { useStyles } from "../../styles";
-import { StyledTableCell } from "./ReadRecord.style";
+import {
+	StyledTableCell,
+	ExaminationName,
+	StyledTableRow,
+	MedicalHistory,
+} from "./ReadRecord.style";
 
 const ReadRecord: FC = () => {
 	// material
@@ -83,43 +87,44 @@ const ReadRecord: FC = () => {
 								<StyledTableCell>{record.dateOfBirth}</StyledTableCell>
 							</StyledTableRow>
 
-							<TableHead>
-								<StyledTableRow>
-									<StyledTableCell>Historia Medyczna</StyledTableCell>
-								</StyledTableRow>
-								{record.medicalHistory.map((examination: Examination) => (
-									<>
-										<StyledTableRow>
-											<StyledTableCell>Nazwa Badania:</StyledTableCell>
-											<StyledTableCell>
-												{examination.examinationName}
-											</StyledTableCell>
-										</StyledTableRow>
-										<StyledTableRow>
-											<StyledTableCell>Miejsce Badania</StyledTableCell>
-											<StyledTableCell>${examination.place}</StyledTableCell>
-										</StyledTableRow>
-										<StyledTableRow>
-											<StyledTableCell>Data: </StyledTableCell>
-											<StyledTableCell>{examination.date}</StyledTableCell>
-										</StyledTableRow>
-										<StyledTableRow>
-											<StyledTableCell>Wynik Badania:</StyledTableCell>
-											<StyledTableCell>{examination.result}</StyledTableCell>
-										</StyledTableRow>
-										<StyledTableRow>
-											<StyledTableCell>Recepta:</StyledTableCell>
-											<StyledTableCell>
-												{examination.prescription}
-											</StyledTableCell>
-										</StyledTableRow>
-										<StyledTableRow>
-											<StyledTableCell>Cena</StyledTableCell>
-											<StyledTableCell>{examination.price}</StyledTableCell>
-										</StyledTableRow>
-									</>
-								))}
-							</TableHead>
+							<StyledTableRow>
+								<MedicalHistory align='center' colSpan={2}>
+									Historia Medyczna
+								</MedicalHistory>
+							</StyledTableRow>
+
+							{record.medicalHistory.map((examination: Examination) => (
+								<>
+									<StyledTableRow>
+										<ExaminationName>Nazwa Badania:</ExaminationName>
+										<ExaminationName>
+											{examination.examinationName}
+										</ExaminationName>
+									</StyledTableRow>
+									<StyledTableRow>
+										<StyledTableCell>Miejsce Badania</StyledTableCell>
+										<StyledTableCell>{examination.place}</StyledTableCell>
+									</StyledTableRow>
+									<StyledTableRow>
+										<StyledTableCell>Data: </StyledTableCell>
+										<StyledTableCell>{examination.date}</StyledTableCell>
+									</StyledTableRow>
+									<StyledTableRow>
+										<StyledTableCell>Wynik Badania:</StyledTableCell>
+										<StyledTableCell>{examination.result}</StyledTableCell>
+									</StyledTableRow>
+									<StyledTableRow>
+										<StyledTableCell>Recepta:</StyledTableCell>
+										<StyledTableCell>
+											{examination.prescription}
+										</StyledTableCell>
+									</StyledTableRow>
+									<StyledTableRow>
+										<StyledTableCell>Cena</StyledTableCell>
+										<StyledTableCell>{examination.price}</StyledTableCell>
+									</StyledTableRow>
+								</>
+							))}
 						</TableBody>
 					</Table>
 				</TableContainer>

@@ -42,7 +42,7 @@ export const mainUseStyles = makeStyles((theme: Theme) =>
 			padding: theme.spacing(2),
 			textAlign: "center",
 			color: theme.palette.text.secondary,
-			margin: "10%",
+			margin: "15%",
 		},
 	}),
 );
