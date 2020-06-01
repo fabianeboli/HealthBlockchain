@@ -21,8 +21,7 @@ export const useStyles = makeStyles((theme: Theme) =>
         },
         textField: {
             "& > *": {
-                margin: theme.spacing(1),
-
+				margin: theme.spacing(1),
             }
         }
 	}),
