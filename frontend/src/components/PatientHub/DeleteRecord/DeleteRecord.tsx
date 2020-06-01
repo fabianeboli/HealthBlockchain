@@ -1,9 +1,18 @@
 import React, { useState, FC, useContext } from "react";
 import { PatientIndexContext } from "../../../contexts/PatientIndexContext";
 import { Redirect } from "react-router-dom";
+import Button from "@material-ui/core/Button";
+import Input from "@material-ui/core/Input";
+import { DangerButton } from "./DeleteRecord.style";
+import TextField from "@material-ui/core/TextField";
+import { useStyles } from "../../../styles";
+import { Grid } from "@material-ui/core";
 type MouseEvent = React.MouseEvent<HTMLButtonElement, globalThis.MouseEvent>;
 
 const DeleteRecord: FC = (): JSX.Element => {
+	// Material ui
+	const classes = useStyles();
+	// States
 	const { index, changeIndex } = useContext(PatientIndexContext);
 
 	const [error, setError] = useState("");
@@ -28,18 +37,27 @@ const DeleteRecord: FC = (): JSX.Element => {
 
 	const form: JSX.Element = (
 		<>
-			<form>
-				<input
+
+			<form className={classes.root}>
+				<Grid container alignItems='center' justify='center'>
+				<TextField
 					type="text"
 					name="index"
-					placeholder="Rekord do usunięcia"
+					label="Rekord do usunięcia"
 					value={index}
 					disabled
 				/>
 
-				<button type="submit" onClick={(event) => handleForm(event)}>
+				<DangerButton
+					variant="contained"
+					color="primary"
+					type="submit"
+					onClick={(event) => handleForm(event)}
+				>
 					Usuń rekord
-				</button>
+				</DangerButton>
+				</Grid>
+				
 			</form>
 		</>
 	);

@@ -2,10 +2,25 @@ import React, { useState, FC, useContext } from "react";
 import { RecordData, Gender } from "../../../types";
 import { PatientIndexContext } from "../../../contexts/PatientIndexContext";
 import { Redirect } from "react-router-dom";
+import {
+	TextField,
+	FormLabel,
+	RadioGroup,
+	FormControlLabel,
+	Radio,
+	Grid,
+	Typography,
+	FormControl,
+} from "@material-ui/core";
+import { SubmitButton, useStyles } from "../../../styles";
 
 type MouseEvent = React.MouseEvent<HTMLButtonElement, globalThis.MouseEvent>;
 
 const NewRecord: FC = (): JSX.Element => {
+	// Material UI
+	const classes = useStyles();
+
+	// states
 	const { index, changeIndex } = useContext(PatientIndexContext);
 
 	const [firstName, setFirstName] = useState<RecordData["firstName"]>("");
@@ -33,13 +48,9 @@ const NewRecord: FC = (): JSX.Element => {
 			body: JSON.stringify({ index, record }),
 		};
 
-		
-
 		const response = await fetch("http://localhost:3001/", config);
 
-	
-
-		if (response.ok ) {
+		if (response.ok) {
 			console.log(`Record was created ${response.body}`);
 			await changeIndex(String(index));
 			console.log(`Twój indeks to ${index}`);
@@ -51,62 +62,69 @@ const NewRecord: FC = (): JSX.Element => {
 
 	const form: JSX.Element = (
 		<>
-			<form>
-				<input
+			<form className={classes.root}>
+				<TextField
 					type="text"
 					name="firstName"
-					placeholder="Imię"
+					label="Imię"
 					value={firstName}
 					onChange={(event) => setFirstName(event.target.value)}
 					required
 				/>
-				<input
+				<TextField
 					type="text"
 					name="lastName"
-					placeholder="Nazwisko"
+					label="Nazwisko"
 					value={lastName}
 					onChange={(event) => setLastName(event.target.value)}
 					required
 				/>
-				<input
+				<TextField
 					type="text"
 					name="pesel"
-					placeholder="PESEL"
-					min="11"
-					max="11"
+					label="PESEL"
 					value={pesel}
 					onChange={(event) => setPesel(event.target.value)}
 					required
 				/>
+				<FormControl>
+					<FormLabel>Płeć</FormLabel>
+					<RadioGroup row>
+						<FormControlLabel
+							value="female"
+							control={<Radio color="primary" />}
+							label="Kobieta"
+							labelPlacement="start"
+						/>
+						<FormControlLabel
+							value="male"
+							control={<Radio color="primary" />}
+							label="Meżczyzna"
+							labelPlacement="start"
+						/>
+					</RadioGroup>
+				</FormControl>
 
-				<label htmlFor="gender">Mężczyzna</label>
-				<input
-					type="radio"
-					name="gender"
-					value={Gender.male}
-					onChange={() => setGender(Gender.male)}
-					required
-				/>
-				<label htmlFor="gender">Kobieta</label>
-				<input
-					type="radio"
-					name="gender"
-					value={Gender.female}
-					onChange={() => setGender(Gender.female)}
-					required
-				/>
-				<label htmlFor="dateOfBirth"> Data urodzenia</label>
-				<input
+				<TextField
 					type="date"
 					name="dateOfBirth"
-					placeholder="Data urodzenia"
+					label="Data urodzenia"
 					value={dateOfBirth}
 					onChange={(event) => setDateOfBirth(event.target.value)}
+					InputLabelProps={{
+						shrink: true,
+					}}
 					required
 				/>
-				<button type="submit" onClick={(event) => handleForm(event)}>
+
+				<SubmitButton
+					variant="contained"
+					color="primary"
+					type="submit"
+					onClick={(event) => handleForm(event)}
+				>
 					Dodaj Rekord
-				</button>
+				</SubmitButton>
 			</form>
 		</>
 	);
@@ -116,7 +134,7 @@ const NewRecord: FC = (): JSX.Element => {
 			<h1>Dodaj nowy rekord</h1>
 			{index && <Redirect to="/patient" />}
 			{!index && form}
-			{error && <h1>Błąd: {error}</h1>}
+			{error && <Typography variant="h4">Błąd: {error}</Typography>}
 		</div>
 	);
 };

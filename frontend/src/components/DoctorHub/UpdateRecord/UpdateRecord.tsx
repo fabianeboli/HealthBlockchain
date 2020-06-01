@@ -2,8 +2,14 @@ import React, { useState, FC } from "react";
 import { RecordData, Examination } from "../../../types";
 import moment from "moment";
 import "moment/locale/pl";
+import { Input, Button, TextField, Grid } from "@material-ui/core";
+import { SubmitButton, useStyles } from "../../../styles";
 
 const UpdateRecord: FC = () => {
+	// Material UI
+	const classes = useStyles();
+
+	// States
 	const [index, setIndex] = useState<string>("");
 	const [loader, setLoader] = useState<boolean>(false);
 	const [medicalHistory, setMedicalHistory] = useState<Examination[]>([]);
@@ -101,63 +107,69 @@ const UpdateRecord: FC = () => {
 
 	const form: JSX.Element = (
 		<>
-			<form>
-				<input
+			<form className={classes.textField}>
+			
+				<TextField
 					type="text"
 					name="index"
-					placeholder="Indeks pacjenta"
+					label="Indeks pacjenta"
 					value={index}
 					onChange={(event) => setIndex(event.target.value)}
 					required
 				/>
-				<input
+				<TextField
 					type="text"
 					name="Examination"
-					placeholder="Badanie"
+					label="Badanie"
 					value={examinationName}
 					onChange={(event) => setExaminationName(event.target.value)}
 					required
 				/>
-				<input
+				<TextField
 					type="text"
 					name="date"
-					placeholder="Miejsce badania"
-					min="11"
-					max="11"
+					label="Miejsce badania"
 					value={place}
 					onChange={(event) => setPlace(event.target.value)}
 					required
 				/>
 
-				<input
+				<TextField
 					type="text"
 					name="result"
-					placeholder="Wynik badania"
-					min="11"
-					max="11"
+					label="Wynik badania"
 					value={result}
 					onChange={(event) => setResult(event.target.value)}
 					required
 				/>
-				<input
+				<TextField
 					type="text"
 					name="prescription"
-					placeholder="Leki"
+					label="Leki"
 					value={prescription}
 					onChange={(event) => setPrescription(event.target.value)}
 					required
 				/>
-				<input
+				<TextField
 					type="text"
 					name="price"
-					placeholder="cena badania"
+					label="Cena badania"
 					value={price}
 					onChange={(event) => setPrice(event.target.value)}
 					required
 				/>
-				<button type="submit" onClick={(event) => handleForm(event)}>
-					Dodaj nowe Badanie
-				</button>
+			
+				
+				<div>
+					<SubmitButton
+						variant="contained"
+						color="primary"
+						type="submit"
+						onClick={(event) => handleForm(event)}
+					>
+						Dodaj nowe Badanie
+					</SubmitButton>
+				</div>
 			</form>
 		</>
 	);
@@ -165,6 +177,7 @@ const UpdateRecord: FC = () => {
 	return (
 		<div>
 			{form}
+			{loader && <h1>Dodawanie nowego badania...</h1>}
 			{error && <h1>Błąd: {error}</h1>}
 		</div>
 	);
