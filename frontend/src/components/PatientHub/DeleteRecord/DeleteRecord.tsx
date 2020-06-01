@@ -18,6 +18,7 @@ const DeleteRecord: FC = (): JSX.Element => {
 	const [error, setError] = useState("");
 
 	const handleForm = async (event: MouseEvent): Promise<void> => {
+		setError("");
 		event.preventDefault();
 
 		const config = {
@@ -37,27 +38,25 @@ const DeleteRecord: FC = (): JSX.Element => {
 
 	const form: JSX.Element = (
 		<>
-
 			<form className={classes.root}>
-				<Grid container alignItems='center' justify='center'>
-				<TextField
-					type="text"
-					name="index"
-					label="Rekord do usunięcia"
-					value={index}
-					disabled
-				/>
+				<Grid container alignItems="center" justify="center">
+					<TextField
+						type="text"
+						name="index"
+						label="Rekord do usunięcia"
+						value={index}
+						disabled
+					/>
 
-				<DangerButton
-					variant="contained"
-					color="primary"
-					type="submit"
-					onClick={(event) => handleForm(event)}
-				>
-					Usuń rekord
-				</DangerButton>
+					<DangerButton
+						variant="contained"
+						color="primary"
+						type="submit"
+						onClick={(event) => handleForm(event)}
+					>
+						Usuń rekord
+					</DangerButton>
 				</Grid>
-				
 			</form>
 		</>
 	);

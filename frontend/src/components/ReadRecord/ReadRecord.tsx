@@ -32,6 +32,7 @@ const ReadRecord: FC = () => {
 	const [error, setError] = useState<string>("");
 
 	const fetchPatientData = async (index: string) => {
+		setError("");
 		setLoader(true);
 		const response: Response = await fetch(`http://localhost:3001/${index}`);
 

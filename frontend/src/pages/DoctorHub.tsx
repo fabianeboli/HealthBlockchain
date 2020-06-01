@@ -25,7 +25,7 @@ const DoctorHub = () => {
 				onClick={() => setToggleReadRecord(!toggleReadRecord)}
 			>
 				{" "}
-				{toggleReadRecord ? `Zamknij` : `Odczytaj rekord`}
+				{toggleReadRecord ? `Zamknij rekord` : `Odczytaj rekord`}
 			</Button>
 			<Button
 				variant="contained"

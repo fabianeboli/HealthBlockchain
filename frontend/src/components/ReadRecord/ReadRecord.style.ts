@@ -6,6 +6,8 @@ export const StyledTableCell = withStyles((theme: Theme) =>
 		head: {
 			backgroundColor: indigo[600],
 			color: theme.palette.getContrastText(indigo[600]),
+			fontSize: 18,
+			fontWeight: 700,
 		},
 		body: {
 			fontSize: 14,
@@ -28,8 +30,9 @@ export const MedicalHistory = withStyles((theme: Theme) =>
 		root: {
 			backgroundColor: indigo[600],
 			color: theme.palette.getContrastText(indigo[400]),
-    },
-    
+			fontSize: 16,
+			fontWeight: 700,
+		},
 	}),
 )(TableCell);
 

@@ -76,6 +76,7 @@ const UpdateRecord: FC = () => {
 		event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
 	): Promise<void> => {
 		event.preventDefault();
+		setError("")
 		setLoader(true);
 		const response: Response = await fetch(`http://localhost:3001/${index}`);
 		if (response.ok) {
@@ -145,7 +146,7 @@ const UpdateRecord: FC = () => {
 				<TextField
 					type="text"
 					name="prescription"
-					label="Leki"
+					label="Recepta"
 					value={prescription}
 					onChange={(event) => setPrescription(event.target.value)}
 					required
